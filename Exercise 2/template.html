@@ -24,14 +24,15 @@
       var pwds = Array.prototype.slice.call(document.querySelectorAll('[type=password]'));
       var pwdCheckbox = document.querySelector('#show-passwords');
       pwdCheckbox.addEventListener('change', function(e){
-          if (pwdCheckbox.checked){
               pwds.forEach(function(item, index){
+                if (pwdCheckbox.checked){  
                   item.type="text";
-                });
-          } else {
+                }
+                else {
                pwds.forEach(function(item, index){
                   item.type="password";
             });
-          };
+          }
+         });
       });
 </script>
