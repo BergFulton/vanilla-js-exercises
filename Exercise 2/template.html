@@ -1,0 +1,37 @@
+<form>
+	<div>
+		<label for="current-password">Current Password</label>
+		<input type="password" name="current-password" id="current-password">
+	</div>
+
+	<div>
+		<label for="new-password">New Password</label>
+		<input type="password" name="new-password" id="new-password">
+	</div>
+
+	<div>
+		<label for="show-passwords">
+			<input type="checkbox" name="show-passwords" id="show-passwords">
+			Show passwords
+		</label>
+	</div>
+
+	<p>
+		<button type="submit">Change Passwords</button>
+	</p>
+</form>
+<script>
+      var pwds = Array.prototype.slice.call(document.querySelectorAll('[type=password]'));
+      var pwdCheckbox = document.querySelector('#show-passwords');
+      pwdCheckbox.addEventListener('change', function(e){
+          if (pwdCheckbox.checked){
+              pwds.forEach(function(item, index){
+                  item.type="text";
+                });
+          } else {
+               pwds.forEach(function(item, index){
+                  item.type="password";
+            });
+          };
+      });
+</script>
