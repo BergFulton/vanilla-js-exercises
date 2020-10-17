@@ -1,0 +1,71 @@
+<h2>Change Username</h2>
+
+<p>Enter your username and password to change your username.</p>
+
+<form>
+	<div>
+		<label for="username">Username</label>
+		<input type="text" name="username" id="username">
+	</div>
+
+	<div>
+		<label for="password">Password</label>
+		<input type="password" name="password" id="password">
+	</div>
+
+	<div>
+		<label for="show-password">
+			<input type="checkbox" name="show-passwords" id="show-password">
+			Show password
+		</label>
+	</div>
+
+	<p>
+		<button type="submit">Change Username</button>
+	</p>
+</form>
+
+<h2>Change Password</h2>
+
+<p>Enter your current password and new password below.</p>
+
+<form>
+	<div>
+		<label for="current-password">Current Password</label>
+		<input type="password" name="current-password" id="current-password">
+	</div>
+
+	<div>
+		<label for="new-password">New Password</label>
+		<input type="password" name="new-password" id="new-password">
+	</div>
+
+	<div>
+		<label for="show-passwords">
+			<input type="checkbox" name="show-passwords" id="show-passwords">
+			Show passwords
+		</label>
+	</div>
+
+	<p>
+		<button type="submit">Change Passwords</button>
+	</p>
+</form>
+
+<script>
+window.addEventListener('click', function (event) {
+    var target = event.target;
+    if (target.matches('[name=show-passwords]') && target.getAttribute('id') === 'show-password') {
+        var passwordField = document.querySelector('#password');
+        passwordField.getAttribute('type') === 'password' ? passwordField.setAttribute('type', 'text') : passwordField.setAttribute('type', 'password');
+
+    } else if (target.matches('[name=show-passwords]') && target.getAttribute('id') === 'show-passwords') {
+        var twoPwds = Array.prototype.slice.call(document.querySelectorAll('[type=password]'));
+        var currentPasswordField = document.querySelector('#current-password');
+        var newPasswordField = document.querySelector('#new-password');
+        currentPasswordField.getAttribute('type') === 'password' ? currentPasswordField.setAttribute('type', 'text') : currentPasswordField.setAttribute('type', 'password');
+        newPasswordField.getAttribute('type') === 'password' ? newPasswordField.setAttribute('type', 'text') : newPasswordField.setAttribute('type', 'password');
+    }
+}, false);
+
+</script>
