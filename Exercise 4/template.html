@@ -6,7 +6,7 @@
 <script>
     var textInput = document.querySelector('#text');
 
-    textInput.addEventListener('keyup', function(){
+    textInput.addEventListener('input', function(){
         var charCount = document.querySelector('#character-count');
         var textValue = textInput.value.length;
         charCount.textContent = textValue;
