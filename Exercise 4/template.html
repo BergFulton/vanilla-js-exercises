@@ -1,0 +1,14 @@
+<label for="text">Enter your text below.</label>
+<textarea id="text"></textarea>
+
+<p>You've written <strong><span id="character-count">0</span> characters</strong>.</p>
+
+<script>
+    var textInput = document.querySelector('#text');
+
+    textInput.addEventListener('keyup', function(){
+        var charCount = document.querySelector('#character-count');
+        var textValue = textInput.value.length;
+        charCount.textContent = textValue;
+    });
+</script>
