@@ -5,9 +5,12 @@
 </p>
 
 <script>
+  var api_url = "https://ron-swanson-quotes.herokuapp.com/v2/quotes";
   var quoteElement = document.querySelector('blockquote');
   var swansonButton = document.querySelector('button');
-  swansonButton.addEventListener('click', function () {
+  swansonButton.addEventListener('click', callQuote);
+
+  function callQuote() {
     fetch('https://ron-swanson-quotes.herokuapp.com/v2/quotes').then(function (response) {
       if (response.ok) {
         return response.json();
@@ -19,5 +22,6 @@
     }).catch(function (err) {
       console.warn('Something went wrong.', err);
     });
-  });
+  };
+  callQuote();
 </script>
