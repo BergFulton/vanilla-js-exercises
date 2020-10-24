@@ -1,0 +1,23 @@
+<blockquote></blockquote>
+
+<p>
+  <button>More Ron</button>
+</p>
+
+<script>
+  var quoteElement = document.querySelector('blockquote');
+  var swansonButton = document.querySelector('button');
+  swansonButton.addEventListener('click', function () {
+    fetch('https://ron-swanson-quotes.herokuapp.com/v2/quotes').then(function (response) {
+      if (response.ok) {
+        return response.json();
+      } else {
+        return Promise.reject(response);
+      }
+    }).then(function (data) {
+      quoteElement.textContent = data;
+    }).catch(function (err) {
+      console.warn('Something went wrong.', err);
+    });
+  });
+</script>
