@@ -1,0 +1,34 @@
+<h2>OMG everything is terrible</h2>
+
+<div id="app">
+</div>
+  <script>
+  var appBody = document.querySelector('#app');
+
+  
+  
+    var getStories = function() {
+        fetch('https://api.nytimes.com/svc/topstories/v2/home.json?api-key=j0ZaOi20Cc0cITptz8a140rnfzbFlZdh').then(function (response) {
+            if (response.ok) {
+                return response.json();
+            } else {
+                return Promise.reject(response);
+            }
+        }).then(function (data) {
+           console.log('success');
+           var stories = data.results;
+           console.log(data.results);
+    appBody.innerHTML = '<ul>' + stories.map(function (story) {
+    return '<li>' + '<a href='+stories.short_url+'>' + story.title + '</a>'+'</li>';
+}).join('') + '</ul>';
+        }).catch(function (error) {
+            console.warn = 'Something is not right here, mate.';
+        });
+    };
+
+
+
+  
+    getStories();
+  </script>
+  

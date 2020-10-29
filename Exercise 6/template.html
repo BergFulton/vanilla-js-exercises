@@ -1,27 +1,33 @@
-<blockquote></blockquote>
+<blockquote id="quote" aria-live="polite">
+  <em>Getting a quote</em>
+</blockquote>
 
 <p>
-  <button>More Ron</button>
+  <button id="get-quotes">More Ron</button>
 </p>
 
 <script>
   var api_url = "https://ron-swanson-quotes.herokuapp.com/v2/quotes";
-  var quoteElement = document.querySelector('blockquote');
-  var swansonButton = document.querySelector('button');
-  swansonButton.addEventListener('click', callQuote);
+  var quoteElement = document.querySelector('#quote');
+  var swansonButton = document.querySelector('#get-quotes');
 
-  function callQuote() {
-    fetch('https://ron-swanson-quotes.herokuapp.com/v2/quotes').then(function (response) {
-      if (response.ok) {
-        return response.json();
-      } else {
-        return Promise.reject(response);
-      }
-    }).then(function (data) {
-      quoteElement.textContent = data;
-    }).catch(function (err) {
-      console.warn('Something went wrong.', err);
-    });
-  };
-  callQuote();
+
+  var getQuote = function(){
+    fetch('http://ron-swanson-quotes.herokuapp.com/v2/quotes').then(function (response) {
+	if (response.ok) {
+		return response.json();
+	} else {
+		return Promise.reject(response);
+	}
+}).then(function (data) {
+
+	quote.textContent = data[0];
+  
+}).catch(function (error) {
+	quote.textContent = '[Something went wrong, sorry!] I have a joke for you... The government in this town is excellent, and uses your tax dollars efficiently.';
+});
+};
+
+getQuote();
+swansonButton.addEventListener('click', getQuote, false);
 </script>
