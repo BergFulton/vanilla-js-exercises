@@ -1,0 +1,38 @@
+<h2>OMG everything is terrible</h2>
+<div id="app">
+</div>
+  <script>
+  var appBody = document.querySelector('#app');
+  var apiKey = 'j0ZaOi20Cc0cITptz8a140rnfzbFlZdh';
+  var category = ['food', 'technology', 'arts'];
+  category.forEach(function (category, index) {
+    // console.log(sandwich.textContent);
+    fetch('https://api.nytimes.com/svc/topstories/v2/'+category+'.json?api-key=' + apiKey).then(function (response) {
+	if (response.ok) {
+		return response.json();
+	} else {
+		return Promise.reject(response);
+	}
+}).then(function (data) {
+    var sectionHeader = data.section;
+    var topStories = data.results.slice(0, 3);
+    console.log(topStories);
+	render(topStories, sectionHeader);
+}).catch(function (error) {
+	console.log('Something went wrong:', error);
+});
+});
+var render = function (articles, sectionHeader) {
+	app.innerHTML += '<h2>' + sectionHeader + '</h2>' + articles.map(function (article) {
+		var html =
+			'<article>' +
+				'<h3><a href="' + article.url + '">' + article.title + '</a></h3>' +
+				'<p>' + article.byline + '</p>' +
+				'<p>' + article.abstract + '</p>' +
+			'</article>';
+		return html;
+	}).join('');
+
+};
+  </script>
+  

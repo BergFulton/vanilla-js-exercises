@@ -5,30 +5,38 @@
   <script>
   var appBody = document.querySelector('#app');
 
-  
-  
-    var getStories = function() {
-        fetch('https://api.nytimes.com/svc/topstories/v2/home.json?api-key=j0ZaOi20Cc0cITptz8a140rnfzbFlZdh').then(function (response) {
-            if (response.ok) {
-                return response.json();
-            } else {
-                return Promise.reject(response);
-            }
-        }).then(function (data) {
-           console.log('success');
-           var stories = data.results;
-           console.log(data.results);
-    appBody.innerHTML = '<ul>' + stories.map(function (story) {
-    return '<li>' + '<a href='+stories.short_url+'>' + story.title + '</a>'+'</li>';
-}).join('') + '</ul>';
-        }).catch(function (error) {
-            console.warn = 'Something is not right here, mate.';
-        });
-    };
+  var apiKey = 'j0ZaOi20Cc0cITptz8a140rnfzbFlZdh';
+  // Get articles
+fetch('https://api.nytimes.com/svc/topstories/v2/home.json?api-key=' + apiKey).then(function (response) {
+	if (response.ok) {
+		return response.json();
+	} else {
+		return Promise.reject(response);
+	}
+}).then(function (data) {
 
+	// Render them into the DOM
+	render(data.results);
 
-
+}).catch(function (error) {
+	console.log('Something went wrong:', error);
+});
   
-    getStories();
+var render = function (articles) {
+
+	// Create a new array of markup strings with array.map(), then
+	// Combine them into one string with array.join(), then
+	// Insert them into the DOM with innerHTML
+	app.innerHTML = articles.map(function (article) {
+		var html =
+			'<article>' +
+				'<h2><a href="' + article.url + '">' + article.title + '</a></h2>' +
+				'<p>' + article.byline + '</p>' +
+				'<p>' + article.abstract + '</p>' +
+			'</article>';
+		return html;
+	}).join('');
+
+};
   </script>
   
