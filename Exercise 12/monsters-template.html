@@ -31,6 +31,11 @@
 			height: auto;
 			max-width: 100%;
 		}
+		
+		[data-monster-id] {
+	background-color: transparent;
+	border: 0;
+}
 	</style>
 </head>
 <body>
@@ -63,6 +68,25 @@
 			'monster11',
 			'sock'
 		];
+
+
+ var clickHandler = function (event) {
+
+// Check if clicked element or it's parent has a [data-monster-id] attribute
+// If not, it's not a monster
+// return and stop running our callback function
+var monster = event.target.closest('[data-monster-id]');
+if (!monster) return;
+
+// Get the monster's index in the array
+var id = monster.getAttribute('data-monster-id');
+
+// Update the HTML for the button's parent element
+// This will replace the button so that the content can't be clicked again
+// We'll use the id to get the monster from our shuffled array
+monster.parentNode.innerHTML = '<img alt="' + monsters[id] + '" src="' + monsters[id] + '.svg">';
+
+};
 /**
  * Randomly shuffle an array
  * https://stackoverflow.com/a/2450976/1293256
@@ -91,15 +115,20 @@ return array;
 };
 
 var monsterShuf = shuffle(monsters.slice());
-
-// Create the HTML and inject it into the DOM
-app.innerHTML = '<div class="row">' + monsterShuf.map(function (monster) {
-	var html =
-		'<div class="grid">' +
-			'<img src="' + monster + '.svg">' +
-		'</div>';
-	return html;
-}).join('') + '</div>';
+app.innerHTML =
+'<p>Click a door to reveal a monster. Try not to find the sock.</p>' +
+	'<div class="row">' +
+		monsters.map(function (monster, index) {
+			var html =
+				'<div class="grid" aria-live="polite">' +
+					'<button data-monster-id="' + index + '">' +
+						'<img alt="Click the door to see what\'s behind it" src="door.svg">' +
+					'</button>' +
+				'</div>';
+			return html;
+		}).join('') +
+	'</div>';
+	document.addEventListener('click', clickHandler, false);
 
 
 	</script>
