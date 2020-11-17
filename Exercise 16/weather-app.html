@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Weather App</title>
+
+	<style type="text/css">
+		body {
+			margin: 1em auto;
+			max-width: 30em;
+			width: 88%;
+		}
+	</style>
+</head>
+<body>
+
+    <h1>Weather App</h1>
+    <h2>Ciamar a tha an t-sìde an-drasta?</h2>
+
+	<div id="app">Checking the weather near you...</div>
+    <h3>A bheil e fuar?</h3>
+    <div id="fuar_container"></div>
+	<script>
+        var weather_key = 'e02e9f1a3a6f4b8f8f4197de30b1d5bd';
+        var app = document.querySelector('#app');
+        var cold = document.querySelector('#fuar_container');
+
+
+// Call the API
+fetch('https://ipapi.co/json').then(function (response) {
+	if (response.ok) {
+		return response.json();
+	} else {
+		return Promise.reject(response);
+	}
+}).then(function (data) {
+    var location = data;
+    return fetch('https://api.weatherbit.io/v2.0/current?city='+location.city+','+location.region_code+'&key='+weather_key);
+
+}).then(function (response) {
+	if (response.ok) {
+		return response.json();
+	} else {
+		return Promise.reject(response);
+	}
+}).then(function (weatherData) {
+    var city = weatherData.data[0].city_name;
+    var state = weatherData.data[0].state_code;
+    var location = city +', ' +state;
+    var temp = Math.round(weatherData.data[0].temp);
+    var far = Math.round((temp * 9 / 5) + 32);
+    var weatherDesc = weatherData.data[0].weather.description.toLowerCase();
+    var weatherIcon =  weatherData.data[0].weather.icon;
+    fuar(far);
+    umbrellaStand(location, temp, far, weatherDesc);
+}).catch(function (error) {
+	console.warn('weather did not load');
+});
+
+var fuar = function(far){
+    if ((far <= 0) && (far < 32)){
+        cold.innerHTML = '<p>Tha! Tha e cho fuar! (translation: Yes, it is so cold! (It is bloody baltic out here!))</p>';
+    } else if ((far >= 32 && far < 45)) {
+        cold.innerHTML = '<p>Tha! Tha e gle fhuar! (translation: Yes it is very cold!)</p>';
+    } else if ((far >= 45 && far < 65)) {
+        cold.innerHTML = '<p>Chan eil e cho fuar! (translation: Nope, it is not so cold. Hoodie weather, mate.)</p>';
+    } else if ((far >= 65 && far < 70)){
+        cold.innerHTML = '<p>Chan eil e fuar, tha e blath (translation: It is not cold, it is warm. Taps aff!)</p>';
+    } else {
+        cold.innerHTML = '<p>Chan eil! Tha e teth! (translation: No! It is bloody roasting out here)</p>';
+    }
+
+}
+
+
+var umbrellaStand = function(location, temp, far, weatherDesc){
+    app.innerHTML = '<p>The temperature is ' +far+ 'F/' +temp+ 'C in ' +location+ ' and the weather is ' +weatherDesc+ ' just now</p>';
+};
+
+umbrellaStand();
+fuar();
+
+	</script>
+</body>
+</html>

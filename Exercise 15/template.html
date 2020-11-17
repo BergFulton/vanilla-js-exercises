@@ -96,7 +96,10 @@
 	</footer>
 
 	<script>
-		// Get the table of contents container
+        ;(function(){
+        
+        
+        // Get the table of contents container
 		var tableOfContents = document.querySelector('#table-of-contents');
 
 		// Get all of the h2 headings in the document
@@ -124,6 +127,8 @@
 					}).join('') +
 				'</ol>';
 		}
+        })();
+
 	</script>
 </body>
 </html>
